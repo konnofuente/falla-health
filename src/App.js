@@ -7,6 +7,7 @@ import "./App.css";
 function App() {
   const [hospitals, setHospitals] = useState([]);
 
+  
   const handleHospitalsLoaded = (hospitalList) => {
     setHospitals(hospitalList);
   };
