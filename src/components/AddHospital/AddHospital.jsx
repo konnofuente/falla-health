@@ -17,14 +17,19 @@ const containerStyle = {
   
   const AddHospital = () => {
     const [formData, setFormData] = useState({
-      name: "",
-      address: "",
-      ouverture: "",
-      fermeture: "",
-      inPromotion: false,
-      latitude: 3.8480, // Default latitude
-      longitude: 11.5021, // Default longitude
-    });
+        // name: "",
+        address: "",
+        ouvertureDate: "",
+        ouvertureTime: "",
+        fermetureDate: "",
+        fermetureTime: "",
+        inPromotion: false,
+        latitude: 3.8480,
+        longitude: 11.5021,
+        phone: "",           // Add phone field
+        price: "",           // Add price field
+        reductionPrice: "",  // Add reduction price field
+      });
   
     // Use the correct API key, and make sure it's consistent
     const { isLoaded } = useJsApiLoader({
@@ -80,33 +85,54 @@ const containerStyle = {
       }
     };
   
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        const hospitalData = {
-          ...formData,
-          latitude: parseFloat(formData.latitude),
-          longitude: parseFloat(formData.longitude),
-          ouverture: new Date(`1970-01-01T${formData.ouverture}:00Z`),
-          fermeture: new Date(`1970-01-01T${formData.fermeture}:00Z`),
-        };
-  
-        await addHospital(hospitalData); // Call the service function
-        alert("Hospital added successfully!");
-        setFormData({
-          name: "",
-          address: "",
-          ouverture: "",
-          fermeture: "",
-          inPromotion: false,
-          latitude: center.lat,
-          longitude: center.lng,
-        }); // Reset the form
-      } catch (error) {
-        console.error("Error adding hospital: ", error);
-        alert("Failed to add hospital.");
+    const getDateTime = (date, time) => {
+      if (!date || !time) {
+        return null; // Return null if date or time is falsy
       }
+      return new Date(`${date}T${time}:00`);
     };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+   
+   const ouvertureDateTime = getDateTime(formData.ouvertureDate, formData.ouvertureTime);
+   const fermetureDateTime = getDateTime(formData.fermetureDate, formData.fermetureTime);
+   
+   // You may want to handle `null` case for ouvertureDateTime and fermetureDateTime later in your code.
+   
+          const hospitalData = {
+            ...formData,
+            latitude: parseFloat(formData.latitude),
+            longitude: parseFloat(formData.longitude),
+            ouverture: ouvertureDateTime,
+            fermeture: fermetureDateTime,
+            phone: formData.phone,
+            price: parseFloat(formData.price),
+            reductionPrice: formData.reductionPrice ? parseFloat(formData.reductionPrice) : null,
+          };
+      
+          await addHospital(hospitalData);
+          alert("Hospital added successfully!");
+          setFormData({
+            name: "",
+            address: "",
+            ouvertureDate: "",
+            ouvertureTime: "",
+            fermetureDate: "",
+            fermetureTime: "",
+            inPromotion: false,
+            latitude: center.lat,
+            longitude: center.lng,
+            phone: "",           
+            price: "",           
+            reductionPrice: "",  
+          }); // Reset the form
+        } catch (error) {
+          console.error("Error adding hospital: ", error);
+          alert("Failed to add hospital.");
+        }
+      };
+      
   
     return (
       <div>
@@ -119,7 +145,7 @@ const containerStyle = {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
+            //   required
             />
           </div>
           <div>
@@ -133,25 +159,69 @@ const containerStyle = {
             />
           </div>
           <div>
-            <label>Opening Time: </label>
-            <input
-              type="time"
-              name="ouverture"
-              value={formData.ouverture}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Closing Time: </label>
-            <input
-              type="time"
-              name="fermeture"
-              value={formData.fermeture}
-              onChange={handleChange}
-              required
-            />
-          </div>
+  <label>Opening Date and Time: </label>
+  <input
+    type="date"
+    name="ouvertureDate"
+    value={formData.ouvertureDate}
+    onChange={handleChange}
+    // required
+  />
+  <input
+    type="time"
+    name="ouvertureTime"
+    value={formData.ouvertureTime}
+    onChange={handleChange}
+    // required
+  />
+</div>
+<div>
+  <label>Closing Date and Time: </label>
+  <input
+    type="date"
+    name="fermetureDate"
+    value={formData.fermetureDate}
+    onChange={handleChange}
+    // required
+  />
+  <input
+    type="time"
+    name="fermetureTime"
+    value={formData.fermetureTime}
+    onChange={handleChange}
+    // required
+  />
+</div>
+
+<div>
+  <label>Phone Number: </label>
+  <input
+    type="tel"
+    name="phone"
+    value={formData.phone}
+    onChange={handleChange}
+   
+  />
+</div>
+<div>
+  <label>Price: </label>
+  <input
+    type="number"
+    name="price"
+    value={formData.price}
+    onChange={handleChange}
+    // required
+  />
+</div>
+<div>
+  <label>Reduction Price: </label>
+  <input
+    type="number"
+    name="reductionPrice"
+    value={formData.reductionPrice}
+    onChange={handleChange}
+  />
+</div>
           <div>
             <label>In Promotion: </label>
             <input
