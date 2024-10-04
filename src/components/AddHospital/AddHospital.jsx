@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { addHospital } from "../../services/HospitalService.js"; // Import the service function
-
+import'./AddHospital.css'
 
 const containerStyle = {
     width: '100%',
@@ -134,159 +134,162 @@ const containerStyle = {
       };
       
   
-    return (
-      <div>
-        <h2>Add a New Hospital</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name: </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            //   required
-            />
-          </div>
-          <div>
-            <label>Address: </label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-  <label>Opening Date and Time: </label>
-  <input
-    type="date"
-    name="ouvertureDate"
-    value={formData.ouvertureDate}
-    onChange={handleChange}
-    // required
-  />
-  <input
-    type="time"
-    name="ouvertureTime"
-    value={formData.ouvertureTime}
-    onChange={handleChange}
-    // required
-  />
-</div>
-<div>
-  <label>Closing Date and Time: </label>
-  <input
-    type="date"
-    name="fermetureDate"
-    value={formData.fermetureDate}
-    onChange={handleChange}
-    // required
-  />
-  <input
-    type="time"
-    name="fermetureTime"
-    value={formData.fermetureTime}
-    onChange={handleChange}
-    // required
-  />
-</div>
-
-<div>
-  <label>Phone Number: </label>
-  <input
-    type="tel"
-    name="phone"
-    value={formData.phone}
-    onChange={handleChange}
-   
-  />
-</div>
-<div>
-  <label>Price: </label>
-  <input
-    type="number"
-    name="price"
-    value={formData.price}
-    onChange={handleChange}
-    // required
-  />
-</div>
-<div>
-  <label>Reduction Price: </label>
-  <input
-    type="number"
-    name="reductionPrice"
-    value={formData.reductionPrice}
-    onChange={handleChange}
-  />
-</div>
-          <div>
-            <label>In Promotion: </label>
-            <input
-              type="checkbox"
-              name="inPromotion"
-              checked={formData.inPromotion}
-              onChange={handleChange}
-            />
-          </div>
-  
-          {/* Autocomplete Input for Location Search */}
-          <div>
-            <label>Search Location: </label>
-            {isLoaded && (
-              <Autocomplete
-                onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
-                onPlaceChanged={handlePlaceSelect}
-              >
+      return (
+        <div className="container">
+          {/* Form Container */}
+          <div className="form-container">
+            <h2>Add a New Hospital</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Name: </label>
                 <input
                   type="text"
-                  placeholder="Search for a place"
-                  style={{ width: "100%", padding: "10px" }}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                 />
-              </Autocomplete>
+              </div>
+              <div className="form-group">
+                <label>Address: </label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+          <label>Search Location: </label>
+          {isLoaded && (
+            <Autocomplete
+              onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
+              onPlaceChanged={handlePlaceSelect}
+            >
+              <input
+                type="text"
+                placeholder="Search for a place"
+                style={{ width: "100%", padding: "10px" }}
+              />
+            </Autocomplete>
+          )}
+        </div>
+        
+        <div className="form-group">
+          <label>Latitude: </label>
+          <input
+            type="number"
+            name="latitude"
+            value={formData.latitude}
+            readOnly
+          />
+        </div>
+        
+        <div className="form-group">
+          <label>Longitude: </label>
+          <input
+            type="number"
+            name="longitude"
+            value={formData.longitude}
+            readOnly
+          />
+        </div>
+        
+              <div className="form-group">
+                <label>Opening Date and Time: </label>
+                <input
+                  type="date"
+                  name="ouvertureDate"
+                  value={formData.ouvertureDate}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="time"
+                  name="ouvertureTime"
+                  value={formData.ouvertureTime}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Closing Date and Time: </label>
+                <input
+                  type="date"
+                  name="fermetureDate"
+                  value={formData.fermetureDate}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="time"
+                  name="fermetureTime"
+                  value={formData.fermetureTime}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Phone Number: </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              
+              <div className="form-group">
+                <label>Price: </label>
+                <input
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Reduction Price: </label>
+                <input
+                  type="number"
+                  name="reductionPrice"
+                  value={formData.reductionPrice}
+                  onChange={handleChange}
+                />
+              </div>
+              <button type="submit" className="submit-button">Add Hospital</button>
+            </form>
+          </div>
+      
+          {/* Map Container */}
+          <div className="map-container">
+            {isLoaded && (
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={12}
+                onClick={handleMapClick}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+              >
+                <Marker position={{ lat: formData.latitude, lng: formData.longitude }} />
+                <Autocomplete
+                  onLoad={(ref) => (autocompleteRef.current = ref)}
+                  onPlaceChanged={handlePlaceSelect}
+                >
+                  <input type="text" placeholder="Search for location..." />
+                </Autocomplete>
+              </GoogleMap>
             )}
           </div>
-  
-          <div>
-            <label>Latitude: </label>
-            <input
-              type="number"
-              name="latitude"
-              value={formData.latitude}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Longitude: </label>
-            <input
-              type="number"
-              name="longitude"
-              value={formData.longitude}
-              readOnly
-            />
-          </div>
-  
-          {/* Google Map Component */}
-          {isLoaded && (
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={{ lat: formData.latitude, lng: formData.longitude }}
-              zoom={12}
-              onClick={handleMapClick}
-              onLoad={onLoad}
-              onUnmount={onUnmount}
-            >
-              {/* Marker */}
-              <Marker position={{ lat: formData.latitude, lng: formData.longitude }} />
-            </GoogleMap>
-          )}
-  
-          <button type="submit">Add Hospital</button>
-        </form>
-      </div>
-    );
+        </div>
+      );
+      
   };
   
   export default AddHospital;
