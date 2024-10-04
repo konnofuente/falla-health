@@ -34,14 +34,17 @@ const Map = ({ hospitals }) => {
         center={mapCenter}
         onLoad={onLoadMap}
       >
-        {hospitals.map((hospital) => (
-          <Marker
-            key={hospital.id}
-            position={{ lat: hospital.latitude, lng: hospital.longitude }}
-            title={hospital.name}
-            onClick={() => setSelectedHospital(hospital)}
-          />
-        ))}
+     {hospitals.map((hospital) => (
+  hospital.latitude && hospital.longitude ? (
+    <Marker
+      key={hospital.id}
+      position={{ lat: hospital.latitude, lng: hospital.longitude }}
+      title={hospital.name}
+      onClick={() => setSelectedHospital(hospital)}
+    />
+  ) : null
+))}
+
 
         {selectedHospital && (
           <InfoWindow

@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, GeoPoint } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../firebaseConfig";
 
 // Collection reference for hospitals
 const hospitalsCollection = collection(db, "hospitals");
@@ -37,13 +37,14 @@ export const getHospitals = async () => {
       return {
         id: doc.id,
         name: data.name,
+        address: data.address,
         price: data.price,
-        ouverture: data.ouverture,
-        fermeture: data.fermeture,
-        isOpen: data.isOpen,
+        // Convert Firestore timestamps to date strings
+        ouverture: data.ouverture ? new Date(data.ouverture.seconds * 1000).toLocaleTimeString() : 'N/A',
+        fermeture: data.fermeture ? new Date(data.fermeture.seconds * 1000).toLocaleTimeString() : 'N/A',
         inPromotion: data.inPromotion,
-        latitude: data.location.latitude, // Extract latitude from GeoPoint
-        longitude: data.location.longitude, // Extract longitude from GeoPoint
+        latitude: data.location ? data.location.latitude : null,
+        longitude: data.location ? data.location.longitude : null,
       };
     });
     return hospitals;
