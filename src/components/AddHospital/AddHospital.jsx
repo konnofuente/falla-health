@@ -17,7 +17,7 @@ const containerStyle = {
   
   const AddHospital = () => {
     const [formData, setFormData] = useState({
-        // name: "",
+        name: "",
         address: "",
         ouvertureDate: "",
         ouvertureTime: "",

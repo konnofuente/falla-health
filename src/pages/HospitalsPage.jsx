@@ -1,11 +1,10 @@
-// src/components/pages/HospitalsPage.jsx
 import React, { useState } from "react";
 import Map from "../components/Map/Map.jsx";
 import HospitalList from "../components/Hospitallist/Hospitallist.jsx";
-// import "../../App.css";
 
 const HospitalsPage = () => {
   const [hospitals, setHospitals] = useState([]);
+  const currentLocation = { lat: 3.848, lng: 11.502 }; // Placeholder for the current user location
 
   const handleHospitalsLoaded = (hospitalList) => {
     setHospitals(hospitalList);
@@ -17,8 +16,11 @@ const HospitalsPage = () => {
         <h1>Nearby Hospitals for Breast Cancer Screening</h1>
       </header>
       <div className="content">
-        <HospitalList onHospitalsLoaded={handleHospitalsLoaded} />
-        <Map hospitals={hospitals} />
+        <Map hospitals={hospitals} currentLocation={currentLocation} />
+        <HospitalList
+          onHospitalsLoaded={handleHospitalsLoaded}
+          currentLocation={currentLocation}
+        />
       </div>
     </div>
   );

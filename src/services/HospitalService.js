@@ -36,15 +36,18 @@ export const getHospitals = async () => {
       const data = doc.data();
       return {
         id: doc.id,
-        name: data.name,
-        address: data.address,
-        price: data.price,
-        // Convert Firestore timestamps to date strings
-        ouverture: data.ouverture ? new Date(data.ouverture.seconds * 1000).toLocaleTimeString() : 'N/A',
-        fermeture: data.fermeture ? new Date(data.fermeture.seconds * 1000).toLocaleTimeString() : 'N/A',
-        inPromotion: data.inPromotion,
-        latitude: data.location ? data.location.latitude : null,
-        longitude: data.location ? data.location.longitude : null,
+        name: data.name || "No Name",  // Default if no name
+        address: data.address || "No Address",  // Default if no address
+        price: data.price || "No Price",  // Default if no price
+        reductionPrice: data.reductionPrice || "No Reduction",  // Default if no reduction
+        phone: data.phone || "No Phone",  // Default if no phone
+        ouvertureDate: data.ouvertureDate || "No Opening Date",  // Opening Date
+        ouvertureTime: data.ouvertureTime || "No Opening Time",  // Opening Time
+        fermetureDate: data.fermetureDate || "No Closing Date",  // Closing Date
+        fermetureTime: data.fermetureTime || "No Closing Time",  // Closing Time
+        inPromotion: data.inPromotion || false,  // Promotion flag
+        latitude: data.location?.latitude || null,  // Latitude from GeoPoint
+        longitude: data.location?.longitude || null,  // Longitude from GeoPoint
       };
     });
     return hospitals;

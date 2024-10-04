@@ -6,7 +6,7 @@ import AddHospital from "./components/AddHospital/AddHospital.jsx";
 function App() {
   return (
     <div className="App">
-      <AddHospital />
+      <HospitalsPage />
     </div>
   );
 }
