@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-const Map = ({ hospitals }) => {
+const Map = ({ hospitals,currentLocation  }) => {
   const [map, setMap] = useState(null);
   const [selectedHospital, setSelectedHospital] = useState(null);
-  const [mapCenter, setMapCenter] = useState({ lat: 4.0511, lng: 9.7679 });
+  const [mapCenter, setMapCenter] = useState(currentLocation); 
   const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   const mapStyles = {
     height: "100vh",
@@ -21,6 +21,12 @@ const Map = ({ hospitals }) => {
     }
   };
 
+  useEffect(() => {
+    if (currentLocation) {
+      setMapCenter(currentLocation);
+    }
+  }, [currentLocation]);
+
   const onLoadMap = (mapInstance) => {
     setMap(mapInstance);
     mapInstance.addListener("dragend", handleDragEnd); // Ensure this event is bound to the map instance
@@ -30,10 +36,25 @@ const Map = ({ hospitals }) => {
     <LoadScript googleMapsApiKey={API_KEY}>
       <GoogleMap
         mapContainerStyle={mapStyles}
-        zoom={12}
+        zoom={17}
+          mapTypeId="satellite"
         center={mapCenter}
         onLoad={onLoadMap}
       >
+
+         {/* Custom Marker for User's Current Location */}
+         {currentLocation && window.google && (
+          <Marker
+            position={currentLocation}
+            icon={{
+              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Blue marker for user location
+              scaledSize: new window.google.maps.Size(50, 50), // Custom size for the marker
+            }}
+            title="You are here"
+          />
+        )}
+
+
      {hospitals.map((hospital) => (
   hospital.latitude && hospital.longitude ? (
     <Marker

@@ -17,6 +17,7 @@ const HospitalsPage = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
+          console.log("This is user location: ", position.coords);
           setCurrentLocation({ lat: latitude, lng: longitude });
         },
         (error) => {
@@ -42,11 +43,11 @@ const HospitalsPage = () => {
         <h1>Nearby Hospitals for Breast Cancer Screening</h1>
       </header>
       <div className="content">
-        <Map hospitals={hospitals} />
-        <HospitalList
+      <Map hospitals={hospitals} currentLocation={currentLocation} />
+      {/* <HospitalList
           onHospitalsLoaded={handleHospitalsLoaded}
           currentLocation={currentLocation}
-        />
+        /> */}
       </div>
     </div>
   );
