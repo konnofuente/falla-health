@@ -5,7 +5,7 @@ const Map = ({ hospitals }) => {
   const [map, setMap] = useState(null);
   const [selectedHospital, setSelectedHospital] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 4.0511, lng: 9.7679 });
-
+  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   const mapStyles = {
     height: "100vh",
     width: "100%",
@@ -27,7 +27,7 @@ const Map = ({ hospitals }) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyDrpp4H_umLRGKaAtdZiwMz0zwXoOTEnFs">
+    <LoadScript googleMapsApiKey={API_KEY}>
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={12}

@@ -4,16 +4,59 @@ import "./Hospitallist.css";
 
 const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
   const [hospitals, setHospitals] = useState([]);
+  const [userAddress, setUserAddress] = useState("");
+  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
+  // useEffect(() => {
+  //   const fetchHospitals = async () => {
+  //     const hospitalList = await getHospitals();
+  //     setHospitals(hospitalList);
+  //     onHospitalsLoaded(hospitalList);
+  //   };
+
+  //   fetchHospitals();
+  // }, [onHospitalsLoaded]);
 
   useEffect(() => {
+
+    console.log("this is api key !!!" +API_KEY)
     const fetchHospitals = async () => {
       const hospitalList = await getHospitals();
-      setHospitals(hospitalList);
-      onHospitalsLoaded(hospitalList);
+  
+      // Sort hospitals based on their distance from the currentLocation
+      const sortedHospitals = hospitalList.map((hospital) => {
+        const distance = calculateDistance({ latitude: hospital.latitude, longitude: hospital.longitude });
+        return { ...hospital, distance };
+      }).sort((a, b) => a.distance - b.distance); // Sort by ascending distance
+  
+      setHospitals(sortedHospitals);
+      onHospitalsLoaded(sortedHospitals);
     };
-
+  
     fetchHospitals();
-  }, [onHospitalsLoaded]);
+  }, []);
+
+
+
+useEffect(() => {
+  const fetchUserAddress = async () => {
+    const { lat, lng } = currentLocation;
+
+    // Use Google Maps Geocoding API or a similar reverse geocoding service
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&${API_KEY}`);
+    const data = await response.json();
+
+    if (data.results && data.results[0]) {
+      setUserAddress(data.results[0].formatted_address);
+    } else {
+      setUserAddress("Unknown location");
+    }
+  };
+
+  if (currentLocation) {
+    fetchUserAddress();
+  }
+}, []);
 
   const calculateDistance = (hospitalLocation) => {
     if (!hospitalLocation || !hospitalLocation.latitude || !hospitalLocation.longitude) {
@@ -44,17 +87,18 @@ const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
     <div className="hospital-list">
       <div className="bottom-sheet">
         <h2>Hospitals Offering Breast Cancer Screening</h2>
+        <h3>Current Location: {userAddress}</h3>
         <ul>
           {hospitals.map((hospital) => (
             <li key={hospital.id} className="hospital-item">
               <div className="hospital-header">
                 <h3>{hospital.address || "No Name"}</h3>
-                <p className="hospital-address">{hospital.name}</p>
                 <p className="hospital-distance">
                   {calculateDistance(hospital)} km away
                 </p>
               </div>
               <div className="hospital-details">
+                <p className="hospital-address">{hospital.name}</p>
                 <p>
                   {hospital.ouvertureDate
                     ? `Open: ${hospital.ouvertureDate} ${hospital.ouvertureTime || ""}`
