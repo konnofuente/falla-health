@@ -1,10 +1,10 @@
 .hospital-list {
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     left: 0;
     right: 0;
     background-color: white;
-    max-height: 60vh; /* Adjust height as needed */
+    min-height: 60vh;
     overflow-y: scroll;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -14,14 +14,14 @@
     padding-left: 0;
   }
   
-  .hospital-list ul {
+   .hospital-list ul {
     list-style: none;
-    padding-left: 0; /* Optional: Remove default left padding for the list */
+    padding-left: 0; 
   }
   
   .hospital-list li {
-    margin-bottom: 1rem; /* Optional: Add some space between list items */
-  }
+    margin-bottom: 1rem;
+  } 
   
   .bottom-sheet {
     padding: 20px;
@@ -86,5 +86,31 @@
   
   .hospital-actions button:hover {
     opacity: 0.9;
+  }
+  
+
+  .open-sheet-button {
+      position: fixed; /* Keep the button fixed at the top of the screen */
+      top: 60px; /* Distance from the top of the screen */
+      left: 50%; /* Center horizontally */
+      transform: translateX(-50%); /* Precise horizontal centering */
+  
+      padding: 10px 20px; /* Padding inside the button */
+      font-size: 16px; /* Text size inside the button */
+      color: #fff; /* Text color */
+      background-color: #007BFF; /* Background color */
+      border: none; /* No border */
+      border-radius: 20px; /* Rounded corners */
+  
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+      cursor: pointer; /* Cursor indicates the element is clickable */
+      outline: none; /* Remove outline - focus highlight */
+      transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+  }
+  
+  .open-sheet-button:hover,
+  .open-sheet-button:focus {
+      background-color: #0056b3; /* Darker shade on hover/focus */
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15); /* Slightly larger shadow on hover/focus */
   }
   

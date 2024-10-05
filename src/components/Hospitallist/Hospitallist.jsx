@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getHospitals } from "../../services/HospitalService.js";
 import "./Hospitallist.css"; 
-import Draggable from 'react-draggable';
+import { Sheet, SheetRef } from 'react-modal-sheet';
 
 const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
   const [hospitals, setHospitals] = useState([]);
   const [userAddress, setUserAddress] = useState("");
+  const [isOpen, setIsOpen] = useState(true); // Control for modal sheet
   const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
@@ -75,57 +76,80 @@ useEffect(() => {
   };
 
   return (
+    <>
+  <button onClick={() => setIsOpen(true)} className="open-sheet-button">
+      Show Nearby Hospitals
+  </button>
+  
 
-    <Draggable axis="y">
-    <div className="hospital-list">
-      <div className="bottom-sheet">
-        <h2>Hospitals Offering Breast Cancer Screening</h2>
-        <h3>Current Location: {userAddress}</h3>
-        <ul>
-          {hospitals.map((hospital) => (
-            <li key={hospital.id} className="hospital-item">
-              <div className="hospital-header">
-                <h3>{hospital.address || "No Name"}</h3>
-                <p className="hospital-distance">
-                  {calculateDistance(hospital)} km away
-                </p>
-              </div>
-              <div className="hospital-details">
-                <p className="hospital-address">{hospital.name}</p>
-                <p>
-                  {hospital.ouvertureDate
-                    ? `Open: ${hospital.ouvertureDate} ${hospital.ouvertureTime || ""}`
-                    : "Open Date/Time not available"}
-                  {hospital.fermetureDate
-                    ? ` - Close: ${hospital.fermetureDate} ${hospital.fermetureTime || ""}`
-                    : ""}
-                </p>
-                {hospital.inPromotion && <span className="promotion-tag">In Promotion</span>}
-                {hospital.phone && (
-                  <p className="hospital-phone">Phone: {hospital.phone}</p>
-                )}
-                {hospital.price && (
-                  <p className="hospital-price">
-                    Price: {hospital.price} FCFA
-                    {hospital.reductionPrice && (
-                      <span className="reduction-price">
-                        {" "} {hospital.reductionPrice} FCFA)
-                      </span>
-                    )}
-                  </p>
-                )}
-              </div>
-              <div className="hospital-actions">
-                <button className="btn-direction">Directions</button>
-                <button className="btn-call">Call</button>
-                <button onClick={() => handleShare(hospital)} className="btn-share">Share</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-    </Draggable>
+      <Sheet
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        snapPoints={[550, 300, 100]}
+        initialSnap={0}
+        disableDrag={false}
+      >
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+            <div className="hospital-list">
+              <h2>Hospitals Offering Breast Cancer Screening</h2>
+              <h3>Current Location: {userAddress}</h3>
+              <ul>
+                {hospitals.map((hospital) => (
+                  <li key={hospital.id} className="hospital-item">
+                    <div className="hospital-header">
+                      <h3>{hospital.name || "No Name"}</h3>
+                      <p className="hospital-distance">
+                        {calculateDistance(hospital)} km away
+                      </p>
+                    </div>
+                    <div className="hospital-details">
+                      <p className="hospital-address">{hospital.address}</p>
+                      <p>
+                        {hospital.ouvertureDate
+                          ? `Open: ${hospital.ouvertureDate} ${hospital.ouvertureTime || ""}`
+                          : "Open Date/Time not available"}
+                        {hospital.fermetureDate
+                          ? ` - Close: ${hospital.fermetureDate} ${hospital.fermetureTime || ""}`
+                          : ""}
+                      </p>
+                      {hospital.inPromotion && (
+                        <span className="promotion-tag">In Promotion</span>
+                      )}
+                      {hospital.phone && (
+                        <p className="hospital-phone">Phone: {hospital.phone}</p>
+                      )}
+                      {hospital.price && (
+                        <p className="hospital-price">
+                          Price: {hospital.price} FCFA
+                          {hospital.reductionPrice && (
+                            <span className="reduction-price">
+                              {" "}
+                              {hospital.reductionPrice} FCFA)
+                            </span>
+                          )}
+                        </p>
+                      )}
+                    </div>
+                    <div className="hospital-actions">
+                      <button className="btn-direction">Directions</button>
+                      <button className="btn-call">Call</button>
+                      <button
+                        onClick={() => handleShare(hospital)}
+                        className="btn-share"
+                      >
+                        Share
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Sheet.Content>
+        </Sheet.Container>
+      </Sheet>
+    </>
   );
 };
 
