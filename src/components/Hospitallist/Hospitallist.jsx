@@ -10,45 +10,64 @@ const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
   const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
-
-    console.log("this is api key !!!" +API_KEY)
+    console.log("this is api key !!!" + API_KEY);
+  
     const fetchHospitals = async () => {
-      const hospitalList = await getHospitals();
+      try {
+        const hospitalList = await getHospitals();
   
-      // Sort hospitals based on their distance from the currentLocation
-      const sortedHospitals = hospitalList.map((hospital) => {
-        const distance = calculateDistance({ latitude: hospital.latitude, longitude: hospital.longitude });
-        return { ...hospital, distance };
-      }).sort((a, b) => a.distance - b.distance); // Sort by ascending distance
+        // Sort hospitals based on their distance from the currentLocation
+        const sortedHospitals = hospitalList.map((hospital) => {
+          const distance = calculateDistance({
+            latitude: hospital.latitude,
+            longitude: hospital.longitude
+          });
+          return {...hospital, distance};
+        }).sort((a, b) => a.distance - b.distance); // Sort by ascending distance
   
-      setHospitals(sortedHospitals);
-      onHospitalsLoaded(sortedHospitals);
+        setHospitals(sortedHospitals);
+        onHospitalsLoaded(sortedHospitals);
+      } catch (error) {
+        console.error('Error fetching hospitals:', error);
+        setHospitals([]); // Set to empty array or handle differently based on your UI needs
+      }
     };
   
     fetchHospitals();
-  }, []);
+  }, []); 
 
 
 
-useEffect(() => {
-  const fetchUserAddress = async () => {
-    const { lat, lng } = currentLocation;
-
-    // Use Google Maps Geocoding API or a similar reverse geocoding service
-    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&${API_KEY}`);
-    const data = await response.json();
-
-    if (data.results && data.results[0]) {
-      setUserAddress(data.results[0].formatted_address);
-    } else {
-      setUserAddress("Unknown location");
-    }
-  };
-
-  if (currentLocation) {
+  useEffect(() => {
+    const fetchUserAddress = async () => {
+      try {
+        if (currentLocation) {
+          const { lat, lng } = currentLocation;
+  
+          // Ensure API_KEY is correctly defined and securely stored
+          const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`);
+          
+          if (!response.ok) {
+            throw new Error('Failed to fetch address'); // Throws an error if response is not ok
+          }
+  
+          const data = await response.json();
+  
+          if (data.results && data.results.length > 0) {
+            setUserAddress(data.results[0].formatted_address);
+          } else {
+            setUserAddress("Unknown location");
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user address:', error);
+        setUserAddress("Failed to determine location"); // Set error message or handle differently 
+      }
+    };
+  
     fetchUserAddress();
-  }
-}, []);
+  }, []); 
+
 
   const calculateDistance = (hospitalLocation) => {
     if (!hospitalLocation || !hospitalLocation.latitude || !hospitalLocation.longitude) {

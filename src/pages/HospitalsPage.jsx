@@ -44,10 +44,10 @@ const HospitalsPage = () => {
       </header>
       <div className="content">
       <Map hospitals={hospitals} currentLocation={currentLocation} />
-      {/* <HospitalList
+      <HospitalList
           onHospitalsLoaded={handleHospitalsLoaded}
           currentLocation={currentLocation}
-        /> */}
+        />
       </div>
     </div>
   );

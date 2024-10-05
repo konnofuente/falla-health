@@ -43,10 +43,10 @@ export const getHospitals = async (lastVisible) => {
       const data = doc.data();
       return {
         id: doc.id,
-        name: data.name || "No Name",  // Default if no name
+        name: data.name || "Unknown Cabinet Name",  // Default if no name
         address: data.address || "No Address",  // Default if no address
-        price: data.price || "No Price",  // Default if no price
-        reductionPrice: data.reductionPrice || "No Reduction",  // Default if no reduction
+        price: data.price || "Unknown Price",  // Default if no price
+        reductionPrice: data.reductionPrice || null,  // Default if no reduction
         phone: data.phone || "No Phone",  // Default if no phone
         ouvertureDate: data.ouvertureDate || "No Opening Date",  // Opening Date
         ouvertureTime: data.ouvertureTime || "No Opening Time",  // Opening Time

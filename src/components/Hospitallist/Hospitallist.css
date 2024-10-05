@@ -41,9 +41,13 @@
     align-items: center;
   }
   
-  .hospital-address,
-  .hospital-distance {
+  .hospital-address {
     font-size: 14px;
+    color: #666;
+  }
+  .hospital-distance {
+    font-size: 20px;
+    font-weight: 700;
     color: #666;
   }
   
