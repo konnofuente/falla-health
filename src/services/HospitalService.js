@@ -1,5 +1,6 @@
-import { collection, addDoc, getDocs, GeoPoint } from "firebase/firestore";
+import { collection, addDoc, getDocs, GeoPoint,limit, startAfter ,query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+
 
 // Collection reference for hospitals
 const hospitalsCollection = collection(db, "hospitals");
@@ -29,9 +30,15 @@ export const addHospital = async (hospital) => {
  * Fetch all hospitals from Firestore
  * @returns {Promise} - Promise resolving with array of hospitals
  */
-export const getHospitals = async () => {
+export const getHospitals = async (lastVisible) => {
   try {
-    const querySnapshot = await getDocs(hospitalsCollection);
+    // const querySnapshot = await getDocs(hospitalsCollection);
+
+    const querySnapshot = lastVisible
+    ? await getDocs(query(hospitalsCollection, limit(10), startAfter(lastVisible)))
+    : await getDocs(query(hospitalsCollection, limit(10)));
+
+
     const hospitals = querySnapshot.docs.map((doc) => {
       const data = doc.data();
       return {

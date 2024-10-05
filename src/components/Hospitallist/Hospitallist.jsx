@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getHospitals } from "../../services/HospitalService.js";
 import "./Hospitallist.css"; 
+import Draggable from 'react-draggable';
 
 const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
   const [hospitals, setHospitals] = useState([]);
   const [userAddress, setUserAddress] = useState("");
   const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
-  // useEffect(() => {
-  //   const fetchHospitals = async () => {
-  //     const hospitalList = await getHospitals();
-  //     setHospitals(hospitalList);
-  //     onHospitalsLoaded(hospitalList);
-  //   };
-
-  //   fetchHospitals();
-  // }, [onHospitalsLoaded]);
 
   useEffect(() => {
 
@@ -84,6 +75,8 @@ useEffect(() => {
   };
 
   return (
+
+    <Draggable axis="y">
     <div className="hospital-list">
       <div className="bottom-sheet">
         <h2>Hospitals Offering Breast Cancer Screening</h2>
@@ -132,6 +125,7 @@ useEffect(() => {
         </ul>
       </div>
     </div>
+    </Draggable>
   );
 };
 
