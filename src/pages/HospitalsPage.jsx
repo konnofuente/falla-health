@@ -39,9 +39,7 @@ const HospitalsPage = () => {
 
   return (
     <div className="HospitalsPage">
-      <header>
-        <h1>Nearby Hospitals for Breast Cancer Screening</h1>
-      </header>
+
       <div className="content">
       <Map hospitals={hospitals} currentLocation={currentLocation} />
       <HospitalList

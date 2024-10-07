@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
-import { GoogleMap, Marker, Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, Autocomplete, useJsApiLoader,LoadScript  } from "@react-google-maps/api";
 import { addHospital } from "../../services/HospitalService.js"; // Import the service function
 import'./AddHospital.css'
 
@@ -18,7 +18,7 @@ const containerStyle = {
   const AddHospital = () => {
     const [formData, setFormData] = useState({
         name: "",
-        address: "",
+        address: null,
         ouvertureDate: "",
         ouvertureTime: "",
         fermetureDate: "",
@@ -30,12 +30,14 @@ const containerStyle = {
         price: "",           // Add price field
         reductionPrice: "",  // Add reduction price field
       });
+      const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY_FORM;
   
     // Use the correct API key, and make sure it's consistent
     const { isLoaded } = useJsApiLoader({
       id: 'google-map-script',
       googleMapsApiKey: 'AIzaSyDrpp4H_umLRGKaAtdZiwMz0zwXoOTEnFs', // Use your real Google Maps API key
-      libraries: ['places'], // Ensure the library stays consistent
+   
+      libraries: libraries, // Ensure the library stays consistent
     });
   
     const [map, setMap] = useState(null);
@@ -91,47 +93,53 @@ const containerStyle = {
       }
       return new Date(`${date}T${time}:00`);
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
+   const handleSubmit = async (e) => {
+     e.preventDefault();
    
-   const ouvertureDateTime = getDateTime(formData.ouvertureDate, formData.ouvertureTime);
-   const fermetureDateTime = getDateTime(formData.fermetureDate, formData.fermetureTime);
+     // Check if the address field is empty
+     if (!formData.address || formData.address.trim() === "") {
+       alert("L'adresse ne doit pas être vide."); // Alert in French
+       return; // Exit the function if address is empty
+     }
    
-   // You may want to handle `null` case for ouvertureDateTime and fermetureDateTime later in your code.
+     try {
+       const ouvertureDateTime = getDateTime(formData.ouvertureDate, formData.ouvertureTime);
+       const fermetureDateTime = getDateTime(formData.fermetureDate, formData.fermetureTime);
    
-          const hospitalData = {
-            ...formData,
-            latitude: parseFloat(formData.latitude),
-            longitude: parseFloat(formData.longitude),
-            ouverture: ouvertureDateTime,
-            fermeture: fermetureDateTime,
-            phone: formData.phone,
-            price: parseFloat(formData.price),
-            reductionPrice: formData.reductionPrice ? parseFloat(formData.reductionPrice) : null,
-          };
-      
-          await addHospital(hospitalData);
-          alert("Hospital added successfully!");
-          setFormData({
-            name: "",
-            address: "",
-            ouvertureDate: "",
-            ouvertureTime: "",
-            fermetureDate: "",
-            fermetureTime: "",
-            inPromotion: false,
-            latitude: center.lat,
-            longitude: center.lng,
-            phone: "",           
-            price: "",           
-            reductionPrice: "",  
-          }); // Reset the form
-        } catch (error) {
-          console.error("Error adding hospital: ", error);
-          alert("Failed to add hospital.");
-        }
-      };
+       // Construct hospitalData with validated fields
+       const hospitalData = {
+         ...formData,
+         latitude: parseFloat(formData.latitude),
+         longitude: parseFloat(formData.longitude),
+         ouverture: ouvertureDateTime,
+         fermeture: fermetureDateTime,
+         phone: formData.phone,
+         price: parseFloat(formData.price),
+         reductionPrice: formData.reductionPrice ? parseFloat(formData.reductionPrice) : null,
+       };
+   
+       await addHospital(hospitalData);
+       alert("Hôpital ajouté avec succès!"); // Success message in French
+       setFormData({
+         name: "",
+         address: "",
+         ouvertureDate: "",
+         ouvertureTime: "",
+         fermetureDate: "",
+         fermetureTime: "",
+         inPromotion: false,
+         latitude: center.lat,
+         longitude: center.lng,
+         phone: "",           
+         price: "",           
+         reductionPrice: "",  
+       }); // Reset the form
+     } catch (error) {
+       console.error("Error adding hospital: ", error);
+       alert("Échec de l'ajout de l'hôpital."); // Error message in French
+     }
+   };
+   
       
   
       return (
@@ -141,7 +149,7 @@ const containerStyle = {
             <h2>Add a New Hospital</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Name: </label>
+                <label>Nom du cabinet/evenement: </label>
                 <input
                   type="text"
                   name="name"
@@ -150,7 +158,7 @@ const containerStyle = {
                   required
                 />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>Address: </label>
                 <input
                   type="text"
@@ -159,25 +167,28 @@ const containerStyle = {
                   onChange={handleChange}
                   required
                 />
-              </div>
+              </div> */}
 
               <div className="form-group">
-          <label>Search Location: </label>
+          <label>Address: </label>
           {isLoaded && (
             <Autocomplete
               onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
               onPlaceChanged={handlePlaceSelect}
+              options={{
+                componentRestrictions: { country: "CM" } // Restrict search to Cameroon
+              }}
             >
               <input
                 type="text"
-                placeholder="Search for a place"
+                placeholder="recherche la place"
                 style={{ width: "100%", padding: "10px" }}
               />
             </Autocomplete>
           )}
         </div>
         
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Latitude: </label>
           <input
             type="number"
@@ -195,7 +206,17 @@ const containerStyle = {
             value={formData.longitude}
             readOnly
           />
-        </div>
+        </div>  */}
+              <div className="form-group">
+                <label>Phone Number: </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
         
               <div className="form-group">
                 <label>Opening Date and Time: </label>
@@ -231,20 +252,10 @@ const containerStyle = {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label>Phone Number: </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
 
               
               <div className="form-group">
-                <label>Price: </label>
+                <label>Prix Normal: </label>
                 <input
                   type="number"
                   name="price"
@@ -254,7 +265,7 @@ const containerStyle = {
                 />
               </div>
               <div className="form-group">
-                <label>Reduction Price: </label>
+                <label>Prix Reduction : </label>
                 <input
                   type="number"
                   name="reductionPrice"
@@ -269,6 +280,8 @@ const containerStyle = {
           {/* Map Container */}
           <div className="map-container">
             {isLoaded && (
+
+
               <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}

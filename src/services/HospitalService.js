@@ -43,15 +43,15 @@ export const getHospitals = async (lastVisible) => {
       const data = doc.data();
       return {
         id: doc.id,
-        name: data.name || "Unknown Cabinet Name",  // Default if no name
-        address: data.address || "No Address",  // Default if no address
-        price: data.price || "Unknown Price",  // Default if no price
+        name: data.name || "",  // Default if no name
+        address: data.address || "",  // Default if no address
+        price: data.price || "",  // Default if no price
         reductionPrice: data.reductionPrice || null,  // Default if no reduction
-        phone: data.phone || "No Phone",  // Default if no phone
-        ouvertureDate: data.ouvertureDate || "No Opening Date",  // Opening Date
-        ouvertureTime: data.ouvertureTime || "No Opening Time",  // Opening Time
-        fermetureDate: data.fermetureDate || "No Closing Date",  // Closing Date
-        fermetureTime: data.fermetureTime || "No Closing Time",  // Closing Time
+        phone: data.phone || "",  // Default if no phone
+        ouvertureDate: data.ouvertureDate || "",  // Opening Date
+        ouvertureTime: data.ouvertureTime || "",  // Opening Time
+        fermetureDate: data.fermetureDate || "",  // Closing Date
+        fermetureTime: data.fermetureTime || "",  // Closing Time
         inPromotion: data.inPromotion || false,  // Promotion flag
         latitude: data.location?.latitude || null,  // Latitude from GeoPoint
         longitude: data.location?.longitude || null,  // Longitude from GeoPoint

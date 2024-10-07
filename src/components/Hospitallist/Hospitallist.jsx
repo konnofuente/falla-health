@@ -104,68 +104,86 @@ const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
       <Sheet
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        snapPoints={[550, 300, 100]}
+        snapPoints={[650, 300, 100]}
         initialSnap={0}
         disableDrag={false}
       >
         <Sheet.Container>
           <Sheet.Header />
-          <Sheet.Content>
-            <div className="hospital-list">
-              <h2>Hospitals Offering Breast Cancer Screening</h2>
-              <h3>Current Location: {userAddress}</h3>
-              <ul>
-                {hospitals.map((hospital) => (
-                  <li key={hospital.id} className="hospital-item">
-                    <div className="hospital-header">
-                      <h3>{hospital.name || "No Name"}</h3>
-                      <p className="hospital-distance">
-                        {calculateDistance(hospital)} km away
-                      </p>
-                    </div>
-                    <div className="hospital-details">
-                      <p className="hospital-address">{hospital.address}</p>
-                      <p>
-                        {hospital.ouvertureDate
-                          ? `Open: ${hospital.ouvertureDate} ${hospital.ouvertureTime || ""}`
-                          : "Open Date/Time not available"}
-                        {hospital.fermetureDate
-                          ? ` - Close: ${hospital.fermetureDate} ${hospital.fermetureTime || ""}`
-                          : ""}
-                      </p>
-                      {hospital.inPromotion && (
-                        <span className="promotion-tag">In Promotion</span>
-                      )}
-                      {hospital.phone && (
-                        <p className="hospital-phone">Phone: {hospital.phone}</p>
-                      )}
-                      {hospital.price && (
-                        <p className="hospital-price">
-                          Price: {hospital.price} FCFA
-                          {hospital.reductionPrice && (
-                            <span className="reduction-price">
-                              {" "}
-                              {hospital.reductionPrice} FCFA)
-                            </span>
-                          )}
-                        </p>
-                      )}
-                    </div>
-                    <div className="hospital-actions">
-                      <button className="btn-direction">Directions</button>
-                      <button className="btn-call">Call</button>
-                      <button
-                        onClick={() => handleShare(hospital)}
-                        className="btn-share"
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Sheet.Content>
+         <Sheet.Content>
+           <div className="hospital-list">
+             <h2>Hôpitaux proposant le dépistage du cancer du sein</h2>
+         
+             <ul>
+               {hospitals.map((hospital) => (
+                 <li key={hospital.id} className="hospital-item">
+                   {hospital.inPromotion && (
+                     <span className="promotion-tag">En Promotion</span>
+                   )}
+                   <div className="hospital-header">
+                     <h3 className="hospital-name">{hospital.name || hospital.address}</h3>
+                     
+                     <p className="hospital-distance">
+                       {calculateDistance(hospital)} km de vous
+                     </p>
+                   </div>
+                   <div className="hospital-details">
+                     <p className="hospital-address">{hospital.address}</p>
+     
+     <p>
+       <span className="open">
+         {hospital.ouvertureDate ? `Du ${hospital.ouvertureDate} au ${hospital.fermetureDate || "date de fermeture inconnue"}` : "Période d'ouverture non disponible"}
+       </span> <br></br>
+       {hospital.ouvertureTime && 
+         <span className="close">
+           <span className="open-label">Heure :</span> {`De ${hospital.ouvertureTime} à ${hospital.fermetureTime || "heure de fermeture inconnue"}`}
+         </span>
+       }
+     </p>
+     
+             
+                 
+                    
+                     {hospital.phone && (
+                       <p className="hospital-phone">Téléphone : {hospital.phone}</p>
+                     )}
+                     {hospital.price ? (
+                       <p className="hospital-price">
+                         Prix: <s>{hospital.price} FCFA</s>
+                         {hospital.reductionPrice && (
+                           <span className="reduction-price">
+                             {" "}
+                             Prix réduit : {hospital.reductionPrice} FCFA
+                           </span>
+                         )}
+                       </p>
+                     ) : (
+                       <p className="hospital-price">Veuillez visiter ou appeler pour connaître les prix.</p>
+                     )}
+                   </div>
+                   <div className="hospital-actions">
+                   <button 
+                     className="btn-call"
+                     onClick={() => window.location.href = `tel:${hospital.phone}`}
+                     disabled={!hospital.phone}  // This disables the button if hospital.phone is empty
+                   >
+                     Appeler
+                   </button>
+                   
+                     <button
+                       onClick={() => handleShare(hospital)}
+                       className="btn-share"
+                     >
+                       Partager
+                     </button>
+                   </div>
+                 </li>
+               ))}
+             </ul>
+         
+           </div>
+         </Sheet.Content>
+         
         </Sheet.Container>
       </Sheet>
     </>
