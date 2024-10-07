@@ -35,8 +35,8 @@ export const getHospitals = async (lastVisible) => {
     // const querySnapshot = await getDocs(hospitalsCollection);
 
     const querySnapshot = lastVisible
-    ? await getDocs(query(hospitalsCollection, limit(10), startAfter(lastVisible)))
-    : await getDocs(query(hospitalsCollection, limit(10)));
+    ? await getDocs(query(hospitalsCollection, limit(30), startAfter(lastVisible)))
+    : await getDocs(query(hospitalsCollection, limit(30)));
 
 
     const hospitals = querySnapshot.docs.map((doc) => {

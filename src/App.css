@@ -40,7 +40,7 @@
 
 /* Navigation.css */
 .navbar {
-  background-color: #004466; /* Dark blue background */
+  background-color: #e23b7ec7; /* Dark blue background */
   padding: 10px 20px;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .nav-item:hover, .nav-item:focus {
-  background-color: #0077AA; /* Lighter blue on hover/focus */
+  background-color: #E23B7F; /* Lighter blue on hover/focus */
   outline: none; /* Removes the outline to keep the design clean */
 }
 

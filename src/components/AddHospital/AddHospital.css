@@ -43,7 +43,7 @@
 
 /* Input fields */
 .form-group input {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
@@ -59,7 +59,7 @@
 
 /* Button styling */
 .submit-button {
-  background-color: #007bff;
+  background-color: #813453;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;

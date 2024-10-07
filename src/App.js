@@ -12,12 +12,13 @@ function App() {
         {/* Navigation Links */}
         <nav className="navbar">
       <ul className="nav-links">
-        <li>
-          <Link to="/add-hospital" className="nav-item">Add Hospital</Link>
-        </li>
-        <li>
-          <Link to="/hospitals" className="nav-item">View Hospitals</Link>
-        </li>
+       <li>
+         <Link to="/add-hospital" className="nav-item">Ajouter un hôpital</Link>
+       </li>
+       <li>
+         <Link to="/hospitals" className="nav-item">Voir les hôpitaux</Link>
+       </li>
+       
       </ul>
     </nav>
 

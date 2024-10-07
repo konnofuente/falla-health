@@ -10,7 +10,6 @@ const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
   const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
-    console.log("this is api key !!!" + API_KEY);
   
     const fetchHospitals = async () => {
       try {
@@ -91,14 +90,34 @@ const HospitalList = ({ onHospitalsLoaded, currentLocation }) => {
 
   // Event handler for share button click
   const handleShare = (hospital) => {
-    console.log("Sharing Hospital Information:", hospital);
+    const shareUrl = `https://www.google.com/maps/search/?api=1&query=${hospital.latitude},${hospital.longitude}`;
+    
+    // Check if the browser supports the native share API
+    if (navigator.share) {
+      navigator.share({
+        title: `Découvrez ${hospital.name}`,
+        text: `Hello, j'espère que tu vas bien ! Je viens de découvrir que l'hôpital ${hospital.name} propose des dépistages du sein contre le cancer, et je voulais te partager cette info. Je l'ai trouvé sur le site FallaCare de CamaireTech: https://fallacare.camairetech.com/ Visite le site pour trouver un autre hôpital plus proche de chez toi !`,
+        url: shareUrl,
+      })
+      
+    
+      .then(() => console.log("Sharing successful"))
+      .catch((error) => console.error("Error sharing:", error));
+    } else {
+      // Fallback for browsers that do not support navigator.share
+      navigator.clipboard.writeText(shareUrl)
+        .then(() => alert("Le lien de l'hôpital a été copié dans le presse-papiers !"))
+        .catch((error) => console.error("Error copying link:", error));
+    }
   };
-
   return (
     <>
+{isOpen ? null : 
   <button onClick={() => setIsOpen(true)} className="open-sheet-button">
-      Show Nearby Hospitals
+    Show Nearby Hospitals
   </button>
+}
+
   
 
       <Sheet
