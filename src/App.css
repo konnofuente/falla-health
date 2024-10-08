@@ -53,7 +53,7 @@
 .nav-item {
   color: white; /* White text color */
   text-decoration: none; /* Removes underline from links */
-  padding: 10px 15px; /* Padding around each link for better touch area */
+  padding: 10px 15px; 
   font-size: 16px; /* Sets a nice readable font size */
   font-weight: bold; /* Makes the font bold */
   transition: background-color 0.3s; /* Smooth transition for hover effect */
@@ -64,3 +64,14 @@
   outline: none; /* Removes the outline to keep the design clean */
 }
 
+
+@media (max-width: 768px) {
+  .nav-item {
+    color: white; /* White text color */
+    text-decoration: none; /* Removes underline from links */
+    padding: 0px 0px; /* Padding around each link for better touch area */
+    font-size: 14px; /* Sets a nice readable font size */
+    font-weight: bold; /* Makes the font bold */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+}

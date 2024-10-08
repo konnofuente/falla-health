@@ -120,7 +120,11 @@ const AddHospital = () => {
         formData.fermetureTime
       );
 
-      // Construct hospitalData with validated fields
+      let price = parseFloat(formData.price);
+      let reductionPrice = formData.reductionPrice
+        ? parseFloat(formData.reductionPrice)
+        : null;
+
       const hospitalData = {
         ...formData,
         latitude: parseFloat(formData.latitude),
@@ -128,10 +132,9 @@ const AddHospital = () => {
         ouverture: ouvertureDateTime,
         fermeture: fermetureDateTime,
         phone: `+237${formData.phone}`,
-        price: parseFloat(formData.price),
-        reductionPrice: formData.reductionPrice
-          ? parseFloat(formData.reductionPrice)
-          : null,
+        price: price,
+        reductionPrice: reductionPrice,
+        inPromotion: reductionPrice > 0 && reductionPrice < price,
       };
 
       await addHospital(hospitalData);
@@ -224,41 +227,6 @@ const AddHospital = () => {
               />
             </div>
           </div>
-
-          {/* <div className="form-group">
-                <label>Opening Date and Time: </label>
-                <input
-                  type="date"
-                  name="ouvertureDate"
-                  value={formData.ouvertureDate}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="time"
-                  name="ouvertureTime"
-                  value={formData.ouvertureTime}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Closing Date and Time: </label>
-                <input
-                  type="date"
-                  name="fermetureDate"
-                  value={formData.fermetureDate}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="time"
-                  name="fermetureTime"
-                  value={formData.fermetureTime}
-                  onChange={handleChange}
-                  required
-                />
-              </div> */}
 
           <div className="form-group">
             <div className="group">

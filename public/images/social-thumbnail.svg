@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1200 630" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;">
+    <g id="Artboard1" transform="matrix(2.95076,0,0,1.90664,3506.53,-1025.77)">
+        <rect x="-1188.35" y="537.997" width="406.675" height="330.424" style="fill:none;"/>
+        <g id="logo.svg" transform="matrix(5.3934,0,0,8.34693,-1090.41,702.851)">
+            <g transform="matrix(1,0,0,1,-17,-17.5)">
+                <clipPath id="_clip1">
+                    <rect x="0" y="0" width="34" height="35"/>
+                </clipPath>
+                <g clip-path="url(#_clip1)">
+                    <g>
+                        <path d="M17,1.167L17,33.833M32.867,17.488L1.133,17.488M30.6,17.488C30.599,21.202 29.167,24.764 26.617,27.391C24.067,30.019 20.608,31.496 17,31.5C9.491,31.5 3.4,25.214 3.4,17.488C3.402,13.777 4.836,10.218 7.387,7.595C9.937,4.971 13.395,3.498 17,3.498C20.605,3.498 24.063,4.971 26.613,7.595C29.164,10.218 30.598,13.777 30.6,17.488Z" style="fill:none;fill-rule:nonzero;stroke:rgb(203,53,114);stroke-width:1px;"/>
+                        <path d="M24.649,11.286L19,14.548L19,8.025L15,8.025L15,14.548L9.351,11.286L7.351,14.751L12.999,18.012L7.351,21.273L9.351,24.738L15,21.477L15,28L19,28L19,21.477L24.649,24.738L26.649,21.273L21.001,18.012L26.649,14.751L24.649,11.286Z" style="fill:rgb(203,53,114);fill-rule:nonzero;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,7.35043,3.92537)">
+            <g transform="matrix(0.338896,0,0,0.524482,-1196.44,551.648)">
+                <text x="577.34px" y="137.733px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:54.167px;">FallaCare - Operation</text>
+                <text x="577.34px" y="216.9px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:54.167px;">Octobre</text>
+                <text x="809.294px" y="216.9px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:54.167px;fill:rgb(203,53,114);">Rose</text>
+            </g>
+            <g transform="matrix(0.338896,0,0,0.524482,-1186.15,515.246)">
+                <text x="556.813px" y="369.617px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:rgb(22,18,20);">T<tspan x="575.937px 587.038px " y="369.617px 369.617px ">ro</tspan>uvez les services de dépistage du</text>
+                <text x="556.813px" y="411.283px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:rgb(22,18,20);">cancer du sein et de santé à proximité</text>
+                <text x="556.813px" y="452.95px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:rgb(22,18,20);">au Cameroun.</text>
+            </g>
+        </g>
+    </g>
+</svg>

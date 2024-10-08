@@ -4,40 +4,67 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta name="theme-color" content="#F6C2D7" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="FallaCare - Trouvez les services de dépistage du cancer du sein et de santé à proximité au Cameroun. Découvrez les meilleures options de soins avec CamaireTech." />
+    <meta name="keywords" content="cancer du sein Cameroun, dépistage du cancer, soins de santé Cameroun, CamaireTech, FallaCare santé Cameroun" />
+    <meta name="author" content="CamaireTech" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="FallaCare - Santé et dépistage à proximité | CamaireTech" />
+    <meta property="og:description" content="Accédez facilement aux centres de dépistage et soins de santé au Cameroun avec la plateforme FallaCare de CamaireTech." />
+    <meta property="og:image" content="%PUBLIC_URL%/images/social-thumbnail.png" />
+    <meta property="og:url" content="https://camairetech.com/operation-octobre-rose/" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card for Social Media -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FallaCare - Santé et dépistage à proximité | CamaireTech" />
+    <meta name="twitter:description" content="Accédez facilement aux centres de dépistage et soins de santé au Cameroun avec la plateforme FallaCare de CamaireTech." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/images/social-thumbnail.png" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <!-- Preconnect for Faster Loading of Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- App Manifest -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Title -->
+    <title>FallaCare - Santé et dépistage à proximité | CamaireTech</title>
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="%PUBLIC_URL%/styles/main.css" as="style" />
+    <link rel="preload" href="%PUBLIC_URL%/scripts/main.js" as="script" />
+
+    <!-- Stylesheet -->
+    <!-- <link rel="stylesheet" href="%PUBLIC_URL%/styles/main.css" /> -->
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>Vous devez activer JavaScript pour utiliser cette application.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <!-- Scripts for Your Application -->
+    <!-- <script defer src="%PUBLIC_URL%/scripts/main.js"></script> -->
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <!-- Google Analytics (Example) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-XXXXX-Y');
+    </script>
+
+    <!-- Caching Settings -->
+    <meta http-equiv="Cache-Control" content="max-age=31536000, immutable" />
   </body>
 </html>

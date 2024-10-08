@@ -111,6 +111,12 @@
   .hospital-actions .btn-share {
     background-color: #007bff;
   }
+
+  .btn-call:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
   
   .hospital-actions button:hover {
     opacity: 0.9;
