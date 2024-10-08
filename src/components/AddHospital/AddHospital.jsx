@@ -1,7 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
 import {
-  GoogleMap,
-  Marker,
   Autocomplete,
   useJsApiLoader,
   LoadScript,
@@ -9,10 +7,7 @@ import {
 import { addHospital } from "../../services/HospitalService.js"; // Import the service function
 import "./AddHospital.css";
 
-const containerStyle = {
-  width: "100%",
-  height: "400px",
-};
+
 
 const center = {
   lat: 3.848, // Default center (Yaoundé, Cameroon)
@@ -46,16 +41,9 @@ const AddHospital = () => {
     libraries: libraries, // Ensure the library stays consistent
   });
 
-  const [map, setMap] = useState(null);
+
   const autocompleteRef = useRef(null); // Ref for Autocomplete
 
-  const onLoad = useCallback((map) => {
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(() => {
-    setMap(null);
-  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -65,15 +53,7 @@ const AddHospital = () => {
     });
   };
 
-  const handleMapClick = (e) => {
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
-    setFormData((prev) => ({
-      ...prev,
-      latitude: lat,
-      longitude: lng,
-    }));
-  };
+ 
 
   const handlePlaceSelect = () => {
     const place = autocompleteRef.current.getPlace();
@@ -160,6 +140,11 @@ const AddHospital = () => {
   };
 
   return (
+
+    <LoadScript
+    googleMapsApiKey={API_KEY}
+    libraries={libraries}
+  >
     <div className="container">
       {/* Form Container */}
       <div className="form-container">
@@ -299,30 +284,10 @@ const AddHospital = () => {
         </form>
       </div>
 
-      {/* Map Container */}
-      {/* <div className="map-container">
-            {isLoaded && (
-
-
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={12}
-                onClick={handleMapClick}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-              >
-                <Marker position={{ lat: formData.latitude, lng: formData.longitude }} />
-                <Autocomplete
-                  onLoad={(ref) => (autocompleteRef.current = ref)}
-                  onPlaceChanged={handlePlaceSelect}
-                >
-                  <input type="text" placeholder="Search for location..." />
-                </Autocomplete>
-              </GoogleMap>
-            )}
-          </div> */}
+ 
     </div>
+
+    </LoadScript>
   );
 };
 
