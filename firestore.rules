@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Hospitals collection rules - Public access
+    match /hospitals/{hospitalId} {
+      // Allow read access to all hospitals
+      allow read: if true;
+      
+      // Allow anyone to create hospitals
+      allow create: if validateHospitalData(request.resource.data);
+      
+      // Allow updates
+      allow update: if validateHospitalData(request.resource.data);
+      
+      // Allow deletes
+      allow delete: if true;
+    }
+  }
+  
+  // Helper functions
+  function validateHospitalData(data) {
+    return data.keys().hasAll(['name', 'address', 'location', 'createdAt'])
+      && data.name is string
+      && data.name.size() >= 2
+      && data.name.size() <= 100
+      && data.address is string
+      && data.address.size() >= 10
+      && data.address.size() <= 500
+      && data.location is latlng
+      && data.createdAt == request.time;
+  }
+}
